@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraChase : MonoBehaviour
 {
     private GameObject player;
-    public Vector3 offset = new Vector3(0, 1.7f, -5f);
+    //public Vector3 offset = new Vector3(0, 1.7f, -5f);
     private GameObject basket;
 
     public bool cam3;
@@ -22,8 +22,8 @@ public class CameraChase : MonoBehaviour
     void LateUpdate()
     {
 
-        Vector3 moveVector3 = player.transform.position + new Vector3(0, 1f, -5);
-        moveVector3.y = 3f;
+        Vector3 moveVector3 = player.transform.position+new Vector3(3, 2.5f, -5);
+        ////moveVector3.y = 3f;
 
         Vector3 distance = player.transform.position - basket.transform.position;
         distance.y = 0;

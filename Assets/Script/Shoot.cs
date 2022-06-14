@@ -51,7 +51,7 @@ public class Shoot : MonoBehaviour
     {
         Transform t = gameObject.transform;
         float counter = 0f;
-        while (counter < .75f)
+        while (counter < .75f) 
         {
             t.position = Vector3.Lerp(t.position, endPos, counter);
             counter += Time.deltaTime * 2f;
