@@ -33,15 +33,15 @@ public class Shoot : MonoBehaviour
     {
         if (InputHandler.SwipeDirection == SwipeDirection.Up && BallController.instance.isBounce) // While swap to up on the screen and bounce true, we try shoot
         {
-            if (distance <= 4.5f) //If we too closer the basket get unique shoot
+            if (distance <= 6.5f) //If we too closer the basket get unique shoot
             {
 
                 BallController.instance.isBounce = false;
                 StartCoroutine(UniqueShoot());
             }
-            if (distance > 4.5f) //free throw
+            if (distance > 6.5f) //free throw
             {
-                rb.AddForce((endPos - transform.position + new Vector3(0, 2.5f, 0)) * Random.Range(18.1f, 20.1f));
+                rb.AddForce((endPos - transform.position + new Vector3(0, 3.5f, 0)) * Random.Range(18.1f, 20.1f));
                 BallController.instance.isBounce = false;
             }
         }
@@ -58,5 +58,17 @@ public class Shoot : MonoBehaviour
             yield return 0;
         }
         yield break;
+    }
+
+    // We check to basket with 2 trigger(bottom and top)
+   
+    private void OnTriggerEnter(Collider other) 
+    {
+        if (other.gameObject.tag=="FirstTrigger")
+        {
+            BasketController.instance.OnTriggerEnter(other);
+            BasketController.instance.transform.GetComponent<BoxCollider>().isTrigger = true; // avoid 2 points on one shoot.
+
+        }
     }
 }

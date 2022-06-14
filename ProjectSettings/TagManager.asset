@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Basket
   - Ground
+  - FirstTrigger
   layers:
   - Default
   - TransparentFX

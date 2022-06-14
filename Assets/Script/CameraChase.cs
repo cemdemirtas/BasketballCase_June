@@ -22,7 +22,7 @@ public class CameraChase : MonoBehaviour
     void LateUpdate()
     {
 
-        Vector3 moveVector3 = player.transform.position+new Vector3(3, 2.5f, -5);
+        Vector3 moveVector3 = player.transform.position+ new Vector3(4, 3.5f, -16);
         ////moveVector3.y = 3f;
 
         Vector3 distance = player.transform.position - basket.transform.position;
@@ -60,8 +60,9 @@ public class CameraChase : MonoBehaviour
         {
             moveVector3.y = player.transform.position.y;
         }
-
+        moveVector3.y =4.2f;
         Camera.main.transform.position = moveVector3 + distance.normalized;
+        
 
     }
 }

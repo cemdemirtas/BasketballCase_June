@@ -54,6 +54,7 @@ public class BallController : MonoBehaviour
             Destroy(dustClone, 1f);
             isBounce = true;
             rb.AddForce(Vector3.up * Shoot.instance.bounceUP);
+            SoundController.instance.playBounceSound(); // bounce sound
         }
     }
 

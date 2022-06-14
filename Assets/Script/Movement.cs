@@ -18,7 +18,13 @@ public class Movement : MonoBehaviour
             instance = this;
         }
     }
-
+    private void Update()
+    {
+        if (transform.position.y<-3f)
+        {
+            GameManager.Instance.gamestate = GameManager.GameState.GameOver; // Fall the ball, show game over panel.
+        }
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
