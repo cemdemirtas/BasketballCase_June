@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
     private float verticalMove;
     public float playerSpeed;
     private Rigidbody rb;
+    bool isGameOver;
 
     private void Awake() //Singleton Pattern.
     {
@@ -20,10 +21,17 @@ public class Movement : MonoBehaviour
     }
     private void Update()
     {
-        if (transform.position.y<-3f)
+        if (transform.position.y<-3f && isGameOver==false)
         {
-            GameManager.Instance.gamestate = GameManager.GameState.GameOver; // Fall the ball, show game over panel.
+            Invoke("GameOverState", 1);
+            isGameOver = true;
         }
+    }
+
+    void GameOverState()
+    {
+        isGameOver = false;
+        GameManager.Instance.gamestate = GameManager.GameState.GameOver; // Fall the ball, show game over panel.
     }
     private void Start()
     {

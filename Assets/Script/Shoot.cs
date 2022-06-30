@@ -45,58 +45,56 @@ public class Shoot : MonoBehaviour
         //when we shoot get the cinemachine cams.
         if (transform.position.y > 2.5f)
         {
+            Invoke("CallSideCamera",0f);
             Cinemachine.instance.UpwardCamMethod();
-            Invoke("CallSideCamera", 0.3f);
         }
     }
 
     public void GetShoot()
     {
-        if (/*InputHandler.SwipeDirection == SwipeDirection.Up &&*/ BallController.instance.isBounce) // While swap to up on the screen and bounce true, we try shoot
+        if (InputHandler.SwipeDirection == SwipeDirection.Up && BallController.instance.isBounce) // While swap to up on the screen and bounce true, we try shoot
         {
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            Cinemachine.instance.MainCamMethod();
+            //Closest bug has fixed, throw back -2f and move to endPos.
+            if (distance <= 3)
             {
-                Cinemachine.instance.MainCamMethod();
-                //Closest bug has fixed, throw back -2f and move to endPos.
-                if (distance <= 3)
-                {
-                    Debug.Log("we are too closer to basket");
-                    //transform.DOMoveZ(-2f,0.2f)
-                    transform.DOMoveZ(-4f, 0.3f)
-                    .OnComplete(() =>
-                transform.DOMove(endPos + new Vector3(0, 0.5f, 0) * Lerp, 0.8f));
-                    BallController.instance.isBounce = false;
-                }
-                //If we too closer the basket get unique shoot
-                if (distance <= 6.5f && distance > 3)
-                {
-                    Debug.Log("we closer");
-                    //rb.AddForce((endPos - transform.position + new Vector3(0, 0.5f,0)) * 21f);
-                    transform.DOMove(endPos + new Vector3(0, 0.5f, 0) * Lerp, 0.8f);
-                    BallController.instance.isBounce = false;
+                Debug.Log("we are too closer to basket");
+                //transform.DOMoveZ(-2f,0.2f)
+                transform.DOMoveZ(-5f, 0.3f)
+                .OnComplete(() =>
+            transform.DOMove(endPos + new Vector3(0, 0.5f, 0) * Lerp, 0.8f));
+                BallController.instance.isBounce = false;
+            }
+            //If we too closer the basket get unique shoot
+            if (distance <= 6.5f && distance > 3)
+            {
+                Debug.Log("we closer");
+                //rb.AddForce((endPos - transform.position + new Vector3(0, 0.5f,0)) * 21f);
+                transform.DOMove(endPos + new Vector3(0, 0.5f, 0) * Lerp, 0.8f);
+                BallController.instance.isBounce = false;
 
-                    //StartCoroutine(UniqueShoot());
-                }
-                if (distance > 6.5f) //free throw
-                {
-                    rb.AddForce((endPos - transform.position + new Vector3(0, 3.5f, 0)) * Random.Range(18.1f, 20.1f));
-                    BallController.instance.isBounce = false;
-                }
+                //StartCoroutine(UniqueShoot());
+            }
+            if (distance > 6.5f) //free throw
+            {
+                rb.AddForce((endPos - transform.position + new Vector3(0, 3.5f, 0)) * Random.Range(18.1f, 20.1f));
+                BallController.instance.isBounce = false;
             }
         }
-        }
-        // We check to basket with 2 trigger(bottom and top)
 
-        private void OnTriggerEnter(Collider other)
+    }
+    // We check to basket with 2 trigger(bottom and top)
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "FirstTrigger")
         {
-            if (other.gameObject.tag == "FirstTrigger")
-            {
-                BasketController.instance.OnTriggerEnter(other);
-                BasketController.instance.transform.GetComponent<BoxCollider>().isTrigger = true; // avoid 2 points on one shoot.
-            }
+            BasketController.instance.OnTriggerEnter(other);
+            BasketController.instance.transform.GetComponent<BoxCollider>().isTrigger = true; // avoid 2 points on one shoot.
         }
     }
+}
 
 
 

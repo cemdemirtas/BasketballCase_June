@@ -15,7 +15,7 @@ public class CameraChase : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Basketball");
         basket = GameObject.FindWithTag("Basket");
     }
 

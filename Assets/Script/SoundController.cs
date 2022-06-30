@@ -8,6 +8,7 @@ public class SoundController : MonoBehaviour
 
     AudioSource audioSource;
     [SerializeField] AudioClip bounceSound, netSound;
+
     private void Awake() //Singleton Pattern.
     {
         if (instance == null)
@@ -21,13 +22,21 @@ public class SoundController : MonoBehaviour
 
     }
 
+    bool InGame(bool InGame)
+    {
+        GameManager.Instance.gamestate = GameManager.GameState.InGame; // Fall the ball, show game over panel.
+        return(InGame);
+    }
+
     public void playBounceSound()
     {
-        audioSource.PlayOneShot(bounceSound);
+        if (GameManager.Instance.gamestate == GameManager.GameState.InGame)
+            audioSource.PlayOneShot(bounceSound);
     }
     public void playnetSound()
     {
-        audioSource.PlayOneShot(netSound);
+        if (GameManager.Instance.gamestate==GameManager.GameState.InGame)
+            audioSource.PlayOneShot(netSound);
     }
 
 
